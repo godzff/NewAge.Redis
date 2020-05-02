@@ -1,0 +1,9 @@
+D:\NewAge\NewAge.Redis\src\NewAge.Redis\bin\Debug\netcoreapp3.1\NewAge.Redis.deps.json
+D:\NewAge\NewAge.Redis\src\NewAge.Redis\bin\Debug\netcoreapp3.1\NewAge.Redis.dll
+D:\NewAge\NewAge.Redis\src\NewAge.Redis\bin\Debug\netcoreapp3.1\NewAge.Redis.pdb
+D:\NewAge\NewAge.Redis\src\NewAge.Redis\obj\Debug\netcoreapp3.1\NewAge.Redis.csprojAssemblyReference.cache
+D:\NewAge\NewAge.Redis\src\NewAge.Redis\obj\Debug\netcoreapp3.1\NewAge.Redis.csproj.CoreCompileInputs.cache
+D:\NewAge\NewAge.Redis\src\NewAge.Redis\obj\Debug\netcoreapp3.1\NewAge.Redis.AssemblyInfoInputs.cache
+D:\NewAge\NewAge.Redis\src\NewAge.Redis\obj\Debug\netcoreapp3.1\NewAge.Redis.AssemblyInfo.cs
+D:\NewAge\NewAge.Redis\src\NewAge.Redis\obj\Debug\netcoreapp3.1\NewAge.Redis.dll
+D:\NewAge\NewAge.Redis\src\NewAge.Redis\obj\Debug\netcoreapp3.1\NewAge.Redis.pdb
