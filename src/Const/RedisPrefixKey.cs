@@ -28,6 +28,10 @@ namespace NewAge.Redis.Const
         /// <summary>
         /// 有序集合的前缀  (默认sortedset:)
         /// </summary>
-        public const string SortedSetKey = "sortedset:";
+        public const string SortedSetPrefixKey = "sortedset:";
+        /// <summary>
+        /// 集合(事务)的前缀
+        /// </summary>
+        public const string StorePrefixKey = "urn:";
     }
 }
