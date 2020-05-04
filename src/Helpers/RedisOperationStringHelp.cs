@@ -21,10 +21,8 @@ namespace NewAge.Redis.Helpers
         /// </summary>
         public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default)
         {
-            if (string.IsNullOrWhiteSpace(value))
-            {
+            if (value.IsNullOrEmpty())
                 throw new MyException(nameof(value));
-            }
             return await redisBase.DoSave(db => db.StringSetAsync(RedisPrefixKey.StringPrefixKey + key, value, expiry));
         }
         /// <summary>
@@ -35,7 +33,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value == null)
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new MyException(nameof(value));
             }
             return await redisBase.DoSave(db => db.StringSetAsync(RedisPrefixKey.StringPrefixKey + key, value.ToJson(), expiry));
         }
@@ -48,7 +46,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value == null || value.Count() <= 0)
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new MyException(nameof(value));
             }
             key = RedisPrefixKey.StringPrefixKey + key;
             List<T> li = new List<T>();
