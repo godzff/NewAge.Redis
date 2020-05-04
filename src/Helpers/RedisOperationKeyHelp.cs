@@ -113,5 +113,37 @@ namespace NewAge.Redis.Helpers
             }
             return await redisBase.DoSave(db => db.KeyExistsAsync(key));
         }
+        /// <summary>
+        /// 设置Key过期时间
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="expiry"></param>
+        /// <param name="keyOperatorEnum"></param>
+        /// <returns></returns>
+        public async Task<bool> KeyExpireAsync(string key, TimeSpan? expiry = default, EKeyOperator eKeyOperator = default)
+        {
+            switch (eKeyOperator)
+            {
+                case EKeyOperator.String:
+                    key = RedisPrefixKey.StringPrefixKey + key;
+                    break;
+                case EKeyOperator.List:
+                    key = RedisPrefixKey.ListPrefixKey + key;
+                    break;
+                case EKeyOperator.Set:
+                    key = RedisPrefixKey.SetPrefixKey + key;
+                    break;
+                case EKeyOperator.Hash:
+                    key = RedisPrefixKey.HashPrefixKey + key;
+                    break;
+                case EKeyOperator.SortedSet:
+                    key = RedisPrefixKey.SortedSetPrefixKey + key;
+                    break;
+                default:
+                    key = RedisPrefixKey.StringPrefixKey + key;
+                    break;
+            }
+            return await redisBase.DoSave(db => db.KeyExpireAsync(key, expiry));
+        }
     }
 }
