@@ -29,7 +29,7 @@ namespace NewAge.Redis.Helpers
         /// 保存对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public async Task<bool> StringSetAsync<T>(string key, T value, TimeSpan? expiry = default(TimeSpan?))
+        public async Task<bool> StringSetAsync<T>(string key, T value, TimeSpan? expiry = default)
         {
             if (value == null)
             {
@@ -86,10 +86,10 @@ namespace NewAge.Redis.Helpers
         /// <param name="value"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public Task<long> StringIncrementAsync(string key, long value = 1)
+        public async Task<long> StringIncrementAsync(string key, long value = 1)
         {
             key = RedisPrefixKey.StringPrefixKey + key;
-            return redisBase.DoSave(db => db.StringIncrementAsync(key, value));
+            return await redisBase.DoSave(db => db.StringIncrementAsync(key, value));
         }
 
         /// <summary>
@@ -98,10 +98,10 @@ namespace NewAge.Redis.Helpers
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<long> StringDecrementAsync(string key, long value = 1)
+        public async Task<long> StringDecrementAsync(string key, long value = 1)
         {
             key = RedisPrefixKey.StringPrefixKey + key;
-            return redisBase.DoSave(db => db.StringDecrementAsync(key, value));
+            return await redisBase.DoSave(db => db.StringDecrementAsync(key, value));
         }
     }
 }

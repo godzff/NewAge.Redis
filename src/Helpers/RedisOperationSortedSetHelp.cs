@@ -19,8 +19,8 @@ namespace NewAge.Redis.Helpers
         /// <summary>
         /// SortedSet 新增
         /// </summary>
-        /// <param name="redisKey"></param>
-        /// <param name="member"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         /// <param name="score"></param>
         /// <returns></returns>
         public async Task<bool> SortedSetAddAsync<T>(string key, T value, double score)

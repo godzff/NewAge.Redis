@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace NewAge.Redis.Helpers
 {
-    public partial class RedisOperationHelp
+    public partial class RedisOperationHelp: IRedisOperation
     {
         /// <summary>
         /// 删除
@@ -22,8 +22,8 @@ namespace NewAge.Redis.Helpers
         /// <param name="key">主键</param>
         /// <param name="hashField"需要删除的字段</param>
         /// <returns></returns>
-        public Task<bool> HashDeleteAsync(string key, string hashField)
-            => redisBase.DoSave(db => db.HashDeleteAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
+        public async Task<bool> HashDeleteAsync(string key, string hashField)
+            => await redisBase.DoSave(db => db.HashDeleteAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
 
         /// <summary>
         /// 删除多条
@@ -31,11 +31,11 @@ namespace NewAge.Redis.Helpers
         /// <param name="key">主键</param>
         /// <param name="hashFields"需要删除的字段</param>
         /// <returns></returns>
-        public Task<long> HashDeleteAsync(string key, string[] hashFields)
+        public async Task<long> HashDeleteAsync(string key, string[] hashFields)
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new MyException("值不能为空");
-            return redisBase.DoSave(db => db.HashDeleteAsync(RedisPrefixKey.HashPrefixKey + key, hashFields.ToRedisValueArray()));
+            return await redisBase.DoSave(db => db.HashDeleteAsync(RedisPrefixKey.HashPrefixKey + key, hashFields.ToRedisValueArray()));
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace NewAge.Redis.Helpers
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        public Task<bool> HashExistsAsync(string key, string hashField) => redisBase.DoSave(db => db.HashExistsAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
+        public async Task<bool> HashExistsAsync(string key, string hashField) =>await redisBase.DoSave(db => db.HashExistsAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
         /// <summary>
         /// 获取指定的列的值
         /// </summary>

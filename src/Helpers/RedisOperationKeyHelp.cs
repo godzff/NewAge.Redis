@@ -21,35 +21,25 @@ namespace NewAge.Redis.Helpers
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
+        /// <param name="eKeyOperator"></param>
         public async Task<bool> KeyRemoveAsync(string key, EKeyOperator eKeyOperator = default)
         {
-            switch (eKeyOperator)
+            key = eKeyOperator switch
             {
-                case EKeyOperator.String:
-                    key = RedisPrefixKey.StringPrefixKey + key;
-                    break;
-                case EKeyOperator.List:
-                    key = RedisPrefixKey.ListPrefixKey + key;
-                    break;
-                case EKeyOperator.Set:
-                    key = RedisPrefixKey.SetPrefixKey + key;
-                    break;
-                case EKeyOperator.Hash:
-                    key = RedisPrefixKey.HashPrefixKey + key;
-                    break;
-                case EKeyOperator.SortedSet:
-                    key = RedisPrefixKey.SortedSetPrefixKey + key;
-                    break;
-                default:
-                    key = RedisPrefixKey.StringPrefixKey + key;
-                    break;
-            }
+                EKeyOperator.String => RedisPrefixKey.StringPrefixKey + key,
+                EKeyOperator.List => RedisPrefixKey.ListPrefixKey + key,
+                EKeyOperator.Set => RedisPrefixKey.SetPrefixKey + key,
+                EKeyOperator.Hash => RedisPrefixKey.HashPrefixKey + key,
+                EKeyOperator.SortedSet => RedisPrefixKey.SortedSetPrefixKey + key,
+                _ => RedisPrefixKey.StringPrefixKey + key,
+            };
             return await redisBase.DoSave(db => db.KeyDeleteAsync(key));
         }
         /// <summary>
         /// 移除key
         /// </summary>
         /// <param name="key"></param>
+        /// <param name="eKeyOperator"></param>
         public async Task<long> KeyRemoveAsync(List<string> key, EKeyOperator eKeyOperator = default)
         {
             if (key == null || key.Count() <= 0)
@@ -88,29 +78,18 @@ namespace NewAge.Redis.Helpers
         /// 判断key是否存在
         /// </summary>
         /// <param name="key"></param>
+        /// <param name="eKeyOperator"></param>
         public async Task<bool> KeyExistsAsync(string key, EKeyOperator eKeyOperator = default)
         {
-            switch (eKeyOperator)
+            key = eKeyOperator switch
             {
-                case EKeyOperator.String:
-                    key = RedisPrefixKey.StringPrefixKey + key;
-                    break;
-                case EKeyOperator.List:
-                    key = RedisPrefixKey.ListPrefixKey + key;
-                    break;
-                case EKeyOperator.Set:
-                    key = RedisPrefixKey.SetPrefixKey + key;
-                    break;
-                case EKeyOperator.Hash:
-                    key = RedisPrefixKey.HashPrefixKey + key;
-                    break;
-                case EKeyOperator.SortedSet:
-                    key = RedisPrefixKey.SortedSetPrefixKey + key;
-                    break;
-                default:
-                    key = RedisPrefixKey.StringPrefixKey + key;
-                    break;
-            }
+                EKeyOperator.String => RedisPrefixKey.StringPrefixKey + key,
+                EKeyOperator.List => RedisPrefixKey.ListPrefixKey + key,
+                EKeyOperator.Set => RedisPrefixKey.SetPrefixKey + key,
+                EKeyOperator.Hash => RedisPrefixKey.HashPrefixKey + key,
+                EKeyOperator.SortedSet => RedisPrefixKey.SortedSetPrefixKey + key,
+                _ => RedisPrefixKey.StringPrefixKey + key,
+            };
             return await redisBase.DoSave(db => db.KeyExistsAsync(key));
         }
         /// <summary>
@@ -118,31 +97,19 @@ namespace NewAge.Redis.Helpers
         /// </summary>
         /// <param name="key"></param>
         /// <param name="expiry"></param>
-        /// <param name="keyOperatorEnum"></param>
+        /// <param name="eKeyOperator"></param>
         /// <returns></returns>
         public async Task<bool> KeyExpireAsync(string key, TimeSpan? expiry = default, EKeyOperator eKeyOperator = default)
         {
-            switch (eKeyOperator)
+            key = eKeyOperator switch
             {
-                case EKeyOperator.String:
-                    key = RedisPrefixKey.StringPrefixKey + key;
-                    break;
-                case EKeyOperator.List:
-                    key = RedisPrefixKey.ListPrefixKey + key;
-                    break;
-                case EKeyOperator.Set:
-                    key = RedisPrefixKey.SetPrefixKey + key;
-                    break;
-                case EKeyOperator.Hash:
-                    key = RedisPrefixKey.HashPrefixKey + key;
-                    break;
-                case EKeyOperator.SortedSet:
-                    key = RedisPrefixKey.SortedSetPrefixKey + key;
-                    break;
-                default:
-                    key = RedisPrefixKey.StringPrefixKey + key;
-                    break;
-            }
+                EKeyOperator.String => RedisPrefixKey.StringPrefixKey + key,
+                EKeyOperator.List => RedisPrefixKey.ListPrefixKey + key,
+                EKeyOperator.Set => RedisPrefixKey.SetPrefixKey + key,
+                EKeyOperator.Hash => RedisPrefixKey.HashPrefixKey + key,
+                EKeyOperator.SortedSet => RedisPrefixKey.SortedSetPrefixKey + key,
+                _ => RedisPrefixKey.StringPrefixKey + key,
+            };
             return await redisBase.DoSave(db => db.KeyExpireAsync(key, expiry));
         }
     }
