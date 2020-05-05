@@ -33,5 +33,9 @@ namespace NewAge.Redis.Const
         /// 集合(事务)的前缀
         /// </summary>
         public const string StorePrefixKey = "urn:";
+        /// <summary>
+        /// 分布式锁的前缀
+        /// </summary>
+        public const string LockPrefixKey = "lock:";
     }
 }
