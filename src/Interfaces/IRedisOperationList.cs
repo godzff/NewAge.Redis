@@ -50,6 +50,12 @@ namespace NewAge.Redis.Interfaces
         /// <returns></returns>
         Task<string> ListLeftPopAsync(string key);
         /// <summary>
+        /// 往最前推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task ListLeftPushAsync(string key, string value);
+        /// <summary>
         /// 往最后推送一个数据
         /// </summary>
         /// <param name="key"></param>
@@ -63,11 +69,24 @@ namespace NewAge.Redis.Interfaces
         /// <returns></returns>
         Task<T> ListLeftPopAsync<T>(string key);
         /// <summary>
+        /// 往最前推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<long> ListLeftPushAsync<T>(string key, T value);
+        /// <summary>
         /// 往最后推送一个数据
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
         Task<long> ListRightPushAsync<T>(string key, T value);
+        /// <summary>
+        /// 往最前推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        Task<long> ListLeftPushAsync<T>(string key, List<T> value);
         /// <summary>
         /// 往末尾推送多条数据
         /// </summary>
@@ -75,6 +94,13 @@ namespace NewAge.Redis.Interfaces
         /// <param name="value"></param>
         /// <returns></returns>
         Task<long> ListRightPushAsync<T>(string key, List<T> value);
+        /// <summary>
+        /// 往最前推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        Task<long> ListLeftPushAsync(string key, string[] value);
         /// <summary>
         /// 往末尾推送多条数据ll
         /// </summary>

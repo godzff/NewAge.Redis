@@ -90,6 +90,17 @@ namespace NewAge.Redis.Helpers
             return await redisBase.DoSave(db => db.ListLeftPopAsync(RedisPrefixKey.ListPrefixKey + key));
         }
         /// <summary>
+        /// 往最前推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task ListLeftPushAsync(string key, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new MyException("值不能为空");
+            await redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, value));
+        }
+        /// <summary>
         /// 往最后推送一个数据
         /// </summary>
         /// <param name="key"></param>
@@ -110,6 +121,17 @@ namespace NewAge.Redis.Helpers
             return (await redisBase.DoSave(db => db.ListLeftPopAsync(RedisPrefixKey.ListPrefixKey + key))).ToStr().JsonTo<T>();
         }
         /// <summary>
+        /// 往最前推送一个数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<long> ListLeftPushAsync<T>(string key, T value)
+        {
+            if (value == null)
+                throw new MyException("值不能为空");
+            return await redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToJson()));
+        }
+        /// <summary>
         /// 往最后推送一个数据
         /// </summary>
         /// <param name="key"></param>
@@ -119,6 +141,23 @@ namespace NewAge.Redis.Helpers
             if (value == null)
                 throw new MyException("值不能为空");
             return await redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToJson()));
+        }
+        /// <summary>
+        /// 往最前推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task<long> ListLeftPushAsync<T>(string key, List<T> value)
+        {
+            if (value == null || value.Count <= 0)
+                throw new MyException("值不能为空");
+            List<RedisValue> redisValues = new List<RedisValue>();
+            value.ForEach(item =>
+            {
+                redisValues.Add(item.ToJson());
+            });
+            return await redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, redisValues.ToArray()));
         }
         /// <summary>
         /// 往末尾推送多条数据
@@ -136,6 +175,18 @@ namespace NewAge.Redis.Helpers
                 redisValues.Add(item.ToJson());
             });
             return await redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, redisValues.ToArray()));
+        }
+        /// <summary>
+        /// 往最前推送多条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task<long> ListLeftPushAsync(string key, string[] value)
+        {
+            if (value == null || value.Count() <= 0)
+                throw new MyException("值不能为空");
+            return await redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray()));
         }
         /// <summary>
         /// 往末尾推送多条数据
