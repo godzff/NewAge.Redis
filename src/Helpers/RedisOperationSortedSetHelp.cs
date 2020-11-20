@@ -29,7 +29,7 @@ namespace NewAge.Redis.Helpers
             {
                 throw new MyException(nameof(value));
             }
-            return await redisBase.DoSave(db => db.SortedSetAddAsync(RedisPrefixKey.SortedSetPrefixKey + key, value.ToJson(), score));
+            return await _redisBase.DoSave(db => db.SortedSetAddAsync(RedisPrefixKey.SortedSetPrefixKey + key, value.ToJson(), score));
         }
         /// <summary>
         /// 获取SortedSet的数据
@@ -38,7 +38,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<T> SortedSetGetAsync<T>(string key, double score)
         {
-            var result = await redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(RedisPrefixKey.SortedSetPrefixKey + key, score));
+            var result = await _redisBase.DoSave(db => db.SortedSetRangeByScoreAsync(RedisPrefixKey.SortedSetPrefixKey + key, score));
             return result.ToStr().JsonTo<T>();
         }
         /// <summary>
@@ -48,7 +48,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<long> SortedSetLengthAsync(string key)
         {
-            return await redisBase.DoSave(db => db.SortedSetLengthAsync(RedisPrefixKey.SortedSetPrefixKey + key));
+            return await _redisBase.DoSave(db => db.SortedSetLengthAsync(RedisPrefixKey.SortedSetPrefixKey + key));
         }
         /// <summary>
         /// 移除SortedSet
@@ -59,7 +59,7 @@ namespace NewAge.Redis.Helpers
             {
                 throw new MyException(nameof(value));
             }
-            return await redisBase.DoSave(db => db.SortedSetRemoveAsync(RedisPrefixKey.SortedSetPrefixKey + key, value.ToJson()));
+            return await _redisBase.DoSave(db => db.SortedSetRemoveAsync(RedisPrefixKey.SortedSetPrefixKey + key, value.ToJson()));
         }
     }
 }

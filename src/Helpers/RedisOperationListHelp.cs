@@ -28,7 +28,7 @@ namespace NewAge.Redis.Helpers
             {
                 foreach (var single in value)
                 {
-                    await redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, single.ToJson()));
+                    await _redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, single.ToJson()));
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace NewAge.Redis.Helpers
         /// <param name="key"></param>
         public async Task<List<T>> ListGetAsync<T>(string key)
         {
-            var vList = await redisBase.DoSave(db => db.ListRangeAsync(RedisPrefixKey.ListPrefixKey + key));
+            var vList = await _redisBase.DoSave(db => db.ListRangeAsync(RedisPrefixKey.ListPrefixKey + key));
             List<T> result = new List<T>();
             foreach (var item in vList)
             {
@@ -54,7 +54,7 @@ namespace NewAge.Redis.Helpers
         /// <param name="key"></param>
         public async Task<List<string>> ListGetAsync(string key)
         {
-            var vList = await redisBase.DoSave(db => db.ListRangeAsync(RedisPrefixKey.ListPrefixKey + key));
+            var vList = await _redisBase.DoSave(db => db.ListRangeAsync(RedisPrefixKey.ListPrefixKey + key));
             return vList.ToStringArray().ToList();
         }
         /// <summary>
@@ -66,7 +66,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value == null)
                 throw new MyException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRemoveAsync(RedisPrefixKey.ListPrefixKey + key, value.ToJson(), count));
+            return await _redisBase.DoSave(db => db.ListRemoveAsync(RedisPrefixKey.ListPrefixKey + key, value.ToJson(), count));
         }
 
 
@@ -77,7 +77,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<long> ListLengthAsync(string key)
         {
-            return await redisBase.DoSave(db => db.ListLengthAsync(RedisPrefixKey.ListPrefixKey + key));
+            return await _redisBase.DoSave(db => db.ListLengthAsync(RedisPrefixKey.ListPrefixKey + key));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<string> ListLeftPopAsync(string key)
         {
-            return await redisBase.DoSave(db => db.ListLeftPopAsync(RedisPrefixKey.ListPrefixKey + key));
+            return await _redisBase.DoSave(db => db.ListLeftPopAsync(RedisPrefixKey.ListPrefixKey + key));
         }
         /// <summary>
         /// 往最前推送一个数据
@@ -98,7 +98,7 @@ namespace NewAge.Redis.Helpers
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new MyException("值不能为空");
-            await redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, value));
+            await _redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, value));
         }
         /// <summary>
         /// 往最后推送一个数据
@@ -109,7 +109,7 @@ namespace NewAge.Redis.Helpers
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new MyException("值不能为空");
-            await redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, value));
+            await _redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, value));
         }
         /// <summary>
         /// 删除并返回存储在key上的列表的第一个元素。
@@ -118,7 +118,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<T> ListLeftPopAsync<T>(string key)
         {
-            return (await redisBase.DoSave(db => db.ListLeftPopAsync(RedisPrefixKey.ListPrefixKey + key))).ToStr().JsonTo<T>();
+            return (await _redisBase.DoSave(db => db.ListLeftPopAsync(RedisPrefixKey.ListPrefixKey + key))).ToStr().JsonTo<T>();
         }
         /// <summary>
         /// 往最前推送一个数据
@@ -129,7 +129,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value == null)
                 throw new MyException("值不能为空");
-            return await redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToJson()));
+            return await _redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToJson()));
         }
         /// <summary>
         /// 往最后推送一个数据
@@ -140,7 +140,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value == null)
                 throw new MyException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToJson()));
+            return await _redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToJson()));
         }
         /// <summary>
         /// 往最前推送多条数据
@@ -157,7 +157,7 @@ namespace NewAge.Redis.Helpers
             {
                 redisValues.Add(item.ToJson());
             });
-            return await redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, redisValues.ToArray()));
+            return await _redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, redisValues.ToArray()));
         }
         /// <summary>
         /// 往末尾推送多条数据
@@ -174,7 +174,7 @@ namespace NewAge.Redis.Helpers
             {
                 redisValues.Add(item.ToJson());
             });
-            return await redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, redisValues.ToArray()));
+            return await _redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, redisValues.ToArray()));
         }
         /// <summary>
         /// 往最前推送多条数据
@@ -186,7 +186,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value == null || value.Count() <= 0)
                 throw new MyException("值不能为空");
-            return await redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray()));
+            return await _redisBase.DoSave(db => db.ListLeftPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray()));
         }
         /// <summary>
         /// 往末尾推送多条数据
@@ -198,7 +198,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value == null || value.Count() <= 0)
                 throw new MyException("值不能为空");
-            return await redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray()));
+            return await _redisBase.DoSave(db => db.ListRightPushAsync(RedisPrefixKey.ListPrefixKey + key, value.ToRedisValueArray()));
         }
     }
 }

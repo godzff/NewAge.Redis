@@ -39,7 +39,5 @@ namespace NewAge.Redis.Interfaces
         /// <returns></returns>
         RedisKey[] ConvertRedisKeys(List<string> val);
 
-        EndPoint ParseEndPoints(string hostAndPort);
-
     }
 }

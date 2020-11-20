@@ -23,7 +23,7 @@ namespace NewAge.Redis.Helpers
         /// <param name="handler">需要处理的事件</param>
         public async Task SubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler, CommandFlags flags = CommandFlags.None)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            var subscriber = _redisBase.RedisConnection.GetSubscriber();
             await subscriber.SubscribeAsync(chanel, handler, flags);
         }
         /// <summary>
@@ -33,7 +33,7 @@ namespace NewAge.Redis.Helpers
         /// <param name="message">需要传递的参数</param>
         public async Task<long> PublishAsync(RedisChannel channel, RedisValue message, CommandFlags flags = CommandFlags.None)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            var subscriber = _redisBase.RedisConnection.GetSubscriber();
             return await subscriber.PublishAsync(channel, message, flags);
         }
         /// <summary>
@@ -43,7 +43,7 @@ namespace NewAge.Redis.Helpers
         /// <param name="handler">需要处理的事件</param>
         public async Task UnsubscribeAsync(RedisChannel chanel, Action<RedisChannel, RedisValue> handler = null, CommandFlags flags = CommandFlags.None)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            var subscriber = _redisBase.RedisConnection.GetSubscriber();
             await subscriber.UnsubscribeAsync(chanel, handler, flags);
         }
         /// <summary>
@@ -51,7 +51,7 @@ namespace NewAge.Redis.Helpers
         /// </summary>
         public async Task UnsubscribeAllAsync(CommandFlags flags = CommandFlags.None)
         {
-            var subscriber = redisBase.RedisConnection.GetSubscriber();
+            var subscriber = _redisBase.RedisConnection.GetSubscriber();
             await subscriber.UnsubscribeAllAsync(flags);
         }
     }

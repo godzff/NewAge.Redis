@@ -33,7 +33,7 @@ namespace NewAge.Redis.Helpers
                 string key = RedisPrefixKey.StorePrefixKey + name.ToLower() + ":";
                 //获取id的属性
                 System.Reflection.PropertyInfo propertyInfo = type.GetProperty("Id");
-                var tran = redisBase.DoSave(db => db.CreateTransaction());
+                var tran = _redisBase.DoSave(db => db.CreateTransaction());
                 foreach (var item in list)
                 {
                     //获取id的值
@@ -66,7 +66,7 @@ namespace NewAge.Redis.Helpers
             //获取id的值
             var id = propertyInfo.GetValue(info, null);
             //开启事务
-            var tran = redisBase.DoSave(db => db.CreateTransaction());
+            var tran = _redisBase.DoSave(db => db.CreateTransaction());
             tran.SetAddAsync(RedisPrefixKey.StorePrefixKey + type.Name, id.ToStr());
             tran.StringSetAsync(key + id.ToStr(), info.ToJson());
             return tran.Execute();
@@ -83,7 +83,7 @@ namespace NewAge.Redis.Helpers
             var name = type.Name;
             string key = RedisPrefixKey.StorePrefixKey + name.ToLower() + ":";
 
-            var tran = redisBase.DoSave(db => db.CreateTransaction());
+            var tran = _redisBase.DoSave(db => db.CreateTransaction());
             //获取需要删除的id
             var ids =await SetGetAsync<T>();
             await tran.KeyDeleteAsync(RedisPrefixKey.StorePrefixKey + type.Name);
@@ -105,7 +105,7 @@ namespace NewAge.Redis.Helpers
             //获取类名
             var name = type.Name;
             string key = RedisPrefixKey.StorePrefixKey + name.ToLower() + ":";
-            var tran = redisBase.DoSave(db => db.CreateTransaction());
+            var tran = _redisBase.DoSave(db => db.CreateTransaction());
             tran.SetRemoveAsync(RedisPrefixKey.StorePrefixKey + type.Name, id);
             tran.KeyDeleteAsync(key + id.ToStr());
             return tran.Execute();
@@ -125,7 +125,7 @@ namespace NewAge.Redis.Helpers
                 //获取类名
                 var name = type.Name;
                 string key = RedisPrefixKey.StorePrefixKey + name.ToLower() + ":";
-                var tran = redisBase.DoSave(db => db.CreateTransaction());
+                var tran = _redisBase.DoSave(db => db.CreateTransaction());
                 foreach (var item in ids)
                 {
                     tran.SetRemoveAsync(RedisPrefixKey.StorePrefixKey + type.Name, item);
@@ -156,7 +156,7 @@ namespace NewAge.Redis.Helpers
             {
                 foreach (var item in ids)
                 {
-                    var res = redisBase.DoSave(db => db.StringGet(key + item));
+                    var res = _redisBase.DoSave(db => db.StringGet(key + item));
                     if (!res.IsNullOrEmpty)
                     {
                         li.Add(res.ToStr().JsonTo<T>());
@@ -179,7 +179,7 @@ namespace NewAge.Redis.Helpers
             //获取类名
             var name = type.Name;
             string key = RedisPrefixKey.StorePrefixKey + name.ToLower() + ":";
-            var res = redisBase.DoSave(db => db.StringGet(key + id.ToString()));
+            var res = _redisBase.DoSave(db => db.StringGet(key + id.ToString()));
             if (!res.IsNullOrEmpty)
             {
                 return res.ToStr().JsonTo<T>() ;
@@ -203,7 +203,7 @@ namespace NewAge.Redis.Helpers
             List<T> li = new List<T>();
             foreach (var item in ids)
             {
-                var res = redisBase.DoSave(db => db.StringGet(key + item.ToStr()));
+                var res = _redisBase.DoSave(db => db.StringGet(key + item.ToStr()));
                 if (!res.IsNullOrEmpty)
                 {
                     li.Add(res.ToStr().JsonTo<T>());

@@ -7,15 +7,15 @@ using System.Text;
 
 namespace NewAge.Redis.Helpers
 {
-    public partial class RedisOperationHelp
+    public partial class RedisOperationHelp :IRedisOperation
     {
-        private readonly IRedisBase redisBase;
+        private readonly IRedisBase _redisBase;
         /// <summary>
         /// 实例化连接
         /// </summary>
-        public RedisOperationHelp(IRedisBase _redisBase)
+        public RedisOperationHelp(IRedisBase redisBase)
         {
-            redisBase = _redisBase;
+            _redisBase = redisBase;
         }
     }
 }

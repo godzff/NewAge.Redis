@@ -8,12 +8,13 @@ using Microsoft.Extensions.Options;
 using NewAge.Redis.Options;
 using NewAge.Redis.Interfaces;
 using NewAge.Infra.Exceptions;
+using NewAge.Redis.Helpers;
 
 namespace NewAge.Redis.Helper
 {
     /// <summary>
-    /// 张海波
-    /// 2019.08.13
+    /// zff
+    /// 2020-11-20 15:35:20
     /// redis缓存链接
     /// </summary>
     public class RedisConnectionHelp : IRedisConnection, IDisposable
@@ -21,12 +22,10 @@ namespace NewAge.Redis.Helper
         /// <summary>
         /// 获取redis的参数
         /// </summary>
-        private readonly IOptions<RedisOption> options;
-        private readonly IRedisBase redisBase;
-        public RedisConnectionHelp(IOptions<RedisOption> _options,IRedisBase _redisBase)
+        private readonly IOptions<RedisOption> _options;
+        public RedisConnectionHelp(IOptions<RedisOption> options )
         {
-            options = _options;
-            redisBase = _redisBase;
+            _options = options;
 
             if (RedisConnection == null || !RedisConnection.IsConnected)
             {
@@ -45,7 +44,7 @@ namespace NewAge.Redis.Helper
         {
             get
             {
-                return options.Value != null ? options.Value.Password : "";
+                return _options.Value != null ? _options.Value.Password : "";
             }
         }
         /// <summary>
@@ -55,7 +54,7 @@ namespace NewAge.Redis.Helper
         {
             get
             {
-                return options.Value != null ? options.Value.DefaultDataBase : 0;
+                return _options.Value != null ? _options.Value.DefaultDataBase : 0;
             }
         }
         /// <summary>
@@ -65,7 +64,7 @@ namespace NewAge.Redis.Helper
         {
             get
             {
-                return options.Value != null ? options.Value.Connection : new string[] { };
+                return _options.Value != null ? _options.Value.Connection : new string[] { };
             }
         }
 
@@ -76,7 +75,7 @@ namespace NewAge.Redis.Helper
         {
             get
             {
-                return options.Value != null ? options.Value.IsOpenSentinel : false;
+                return _options.Value != null ? _options.Value.IsOpenSentinel : false;
             }
         }
         /// <summary>
@@ -86,7 +85,7 @@ namespace NewAge.Redis.Helper
         {
             get
             {
-                return options.Value != null ? options.Value.ConnectTimeout : 300;
+                return _options.Value != null ? _options.Value.ConnectTimeout : 300;
             }
         }
 
@@ -97,7 +96,7 @@ namespace NewAge.Redis.Helper
         {
             get
             {
-                return options.Value != null ? options.Value.AsyncTimeout : 5000;
+                return _options.Value != null ? _options.Value.AsyncTimeout : 5000;
             }
         }
 
@@ -165,11 +164,11 @@ namespace NewAge.Redis.Helper
         private void OpenSentinelManager(ConfigurationOptions sentineloptions = null)
         {
             //获取哨兵地址
-            List<string> sentinelConfig = options.Value.RedisSentinelIp.ToList() ?? new List<string>();
+            List<string> sentinelConfig = _options.Value.RedisSentinelIp.ToList() ?? new List<string>();
             //哨兵节点
             sentinelConfig.ForEach(a =>
             {
-                var endPoint = redisBase.ParseEndPoints(a);
+                var endPoint = RedisBaseHelp.ParseEndPoints(a);
                 if (!sentineloption.EndPoints.Contains(endPoint))
                 {
                     sentineloption.EndPoints.Add(a);

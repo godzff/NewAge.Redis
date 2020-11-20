@@ -23,7 +23,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value.IsNullOrEmpty())
                 throw new MyException(nameof(value));
-            return await redisBase.DoSave(db => db.StringSetAsync(RedisPrefixKey.StringPrefixKey + key, value, expiry));
+            return await _redisBase.DoSave(db => db.StringSetAsync(RedisPrefixKey.StringPrefixKey + key, value, expiry));
         }
         /// <summary>
         /// 保存对象
@@ -35,7 +35,7 @@ namespace NewAge.Redis.Helpers
             {
                 throw new MyException(nameof(value));
             }
-            return await redisBase.DoSave(db => db.StringSetAsync(RedisPrefixKey.StringPrefixKey + key, value.ToJson(), expiry));
+            return await _redisBase.DoSave(db => db.StringSetAsync(RedisPrefixKey.StringPrefixKey + key, value.ToJson(), expiry));
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace NewAge.Redis.Helpers
             {
                 li.Add(item);
             }
-            return await redisBase.DoSave(db => db.StringSetAsync(key, li.ToJson(), expiry));
+            return await _redisBase.DoSave(db => db.StringSetAsync(key, li.ToJson(), expiry));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace NewAge.Redis.Helpers
         /// </summary>
         public async Task<RedisValue> StringGetAsync(string key)
         {
-            return await redisBase.DoSave(db => db.StringGetAsync(RedisPrefixKey.StringPrefixKey + key));
+            return await _redisBase.DoSave(db => db.StringGetAsync(RedisPrefixKey.StringPrefixKey + key));
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace NewAge.Redis.Helpers
         public async Task<T> StringGetAsync<T>(string key)
         {
             key = RedisPrefixKey.StringPrefixKey + key;
-            var value = await redisBase.DoSave(db => db.StringGetAsync(key));
+            var value = await _redisBase.DoSave(db => db.StringGetAsync(key));
             if (value.ToString() == null)
             {
                 return default;
@@ -89,7 +89,7 @@ namespace NewAge.Redis.Helpers
         public async Task<long> StringIncrementAsync(string key, long value = 1)
         {
             key = RedisPrefixKey.StringPrefixKey + key;
-            return await redisBase.DoSave(db => db.StringIncrementAsync(key, value));
+            return await _redisBase.DoSave(db => db.StringIncrementAsync(key, value));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace NewAge.Redis.Helpers
         public async Task<long> StringDecrementAsync(string key, long value = 1)
         {
             key = RedisPrefixKey.StringPrefixKey + key;
-            return await redisBase.DoSave(db => db.StringDecrementAsync(key, value));
+            return await _redisBase.DoSave(db => db.StringDecrementAsync(key, value));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace NewAge.Redis.Helpers
                 EKeyOperator.SortedSet => RedisPrefixKey.SortedSetPrefixKey + key,
                 _ => RedisPrefixKey.StringPrefixKey + key,
             };
-            return await redisBase.DoSave(db => db.KeyDeleteAsync(key));
+            return await _redisBase.DoSave(db => db.KeyDeleteAsync(key));
         }
         /// <summary>
         /// 移除key
@@ -72,7 +72,7 @@ namespace NewAge.Redis.Helpers
                         break;
                 }
             });
-            return await redisBase.DoSave(db => db.KeyDeleteAsync(redisBase.ConvertRedisKeys(removeList)));
+            return await _redisBase.DoSave(db => db.KeyDeleteAsync(_redisBase.ConvertRedisKeys(removeList)));
         }
         /// <summary>
         /// 判断key是否存在
@@ -90,7 +90,7 @@ namespace NewAge.Redis.Helpers
                 EKeyOperator.SortedSet => RedisPrefixKey.SortedSetPrefixKey + key,
                 _ => RedisPrefixKey.StringPrefixKey + key,
             };
-            return await redisBase.DoSave(db => db.KeyExistsAsync(key));
+            return await _redisBase.DoSave(db => db.KeyExistsAsync(key));
         }
         /// <summary>
         /// 设置Key过期时间
@@ -110,7 +110,7 @@ namespace NewAge.Redis.Helpers
                 EKeyOperator.SortedSet => RedisPrefixKey.SortedSetPrefixKey + key,
                 _ => RedisPrefixKey.StringPrefixKey + key,
             };
-            return await redisBase.DoSave(db => db.KeyExpireAsync(key, expiry));
+            return await _redisBase.DoSave(db => db.KeyExpireAsync(key, expiry));
         }
     }
 }

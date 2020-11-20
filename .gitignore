@@ -2,3 +2,7 @@
 */.vscode/
 */bin/
 */obj/
+*/*/.vs/
+*/*/.vscode/
+*/*/bin/
+*/*/obj/

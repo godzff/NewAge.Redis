@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace NewAge.Redis.Helpers
 {
-    public partial class RedisOperationHelp: IRedisOperation
+    public partial class RedisOperationHelp
     {
         /// <summary>
         /// 删除
@@ -23,7 +23,7 @@ namespace NewAge.Redis.Helpers
         /// <param name="hashField"需要删除的字段</param>
         /// <returns></returns>
         public async Task<bool> HashDeleteAsync(string key, string hashField)
-            => await redisBase.DoSave(db => db.HashDeleteAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
+            => await _redisBase.DoSave(db => db.HashDeleteAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
 
         /// <summary>
         /// 删除多条
@@ -35,7 +35,7 @@ namespace NewAge.Redis.Helpers
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new MyException("值不能为空");
-            return await redisBase.DoSave(db => db.HashDeleteAsync(RedisPrefixKey.HashPrefixKey + key, hashFields.ToRedisValueArray()));
+            return await _redisBase.DoSave(db => db.HashDeleteAsync(RedisPrefixKey.HashPrefixKey + key, hashFields.ToRedisValueArray()));
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace NewAge.Redis.Helpers
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        public async Task<bool> HashExistsAsync(string key, string hashField) =>await redisBase.DoSave(db => db.HashExistsAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
+        public async Task<bool> HashExistsAsync(string key, string hashField) =>await _redisBase.DoSave(db => db.HashExistsAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
         /// <summary>
         /// 获取指定的列的值
         /// </summary>
@@ -53,7 +53,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<string> HashGetAsync(string key, string hashField)
         {
-            var res = await redisBase.DoSave(db => db.HashGetAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
+            var res = await _redisBase.DoSave(db => db.HashGetAsync(RedisPrefixKey.HashPrefixKey + key, hashField));
             return !res.IsNull ? res.ToStr() : default;
         }
 
@@ -64,7 +64,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<Dictionary<string, string>> HashGetAllAsync(string key)
         {
-            var res = await redisBase.DoSave(db => db.HashGetAllAsync(RedisPrefixKey.HashPrefixKey + key));
+            var res = await _redisBase.DoSave(db => db.HashGetAllAsync(RedisPrefixKey.HashPrefixKey + key));
             return res != null ? res.ToStringDictionary() : default;
         }
         /// <summary>
@@ -77,7 +77,7 @@ namespace NewAge.Redis.Helpers
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new MyException("值不能为空");
-            var res = await redisBase.DoSave(db => db.HashGetAsync(RedisPrefixKey.HashPrefixKey + key, hashFields.ToRedisValueArray()));
+            var res = await _redisBase.DoSave(db => db.HashGetAsync(RedisPrefixKey.HashPrefixKey + key, hashFields.ToRedisValueArray()));
             return res != null ? res.ToStringArray() : default;
         }
         /// <summary>
@@ -85,7 +85,7 @@ namespace NewAge.Redis.Helpers
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public Task<long> HashLengthAsync(string key) => redisBase.DoSave(db => db.HashLengthAsync(RedisPrefixKey.HashPrefixKey + key));
+        public Task<long> HashLengthAsync(string key) => _redisBase.DoSave(db => db.HashLengthAsync(RedisPrefixKey.HashPrefixKey + key));
 
         /// <summary>
         /// 存储hash值
@@ -97,7 +97,7 @@ namespace NewAge.Redis.Helpers
         {
             if (hashFields == null || hashFields.Count() <= 0)
                 throw new MyException("值不能为空");
-            return redisBase.DoSave(db => db.HashSetAsync(RedisPrefixKey.HashPrefixKey + key, hashFields));
+            return _redisBase.DoSave(db => db.HashSetAsync(RedisPrefixKey.HashPrefixKey + key, hashFields));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public Task<bool> HashSetAsync(string key, string hashField, string value)
         {
-            return redisBase.DoSave(db => db.HashSetAsync(RedisPrefixKey.HashPrefixKey + key, hashField, value));
+            return _redisBase.DoSave(db => db.HashSetAsync(RedisPrefixKey.HashPrefixKey + key, hashField, value));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<string[]> HashValuesAsync(string key)
         {
-            var res = await redisBase.DoSave(db => db.HashValuesAsync(RedisPrefixKey.HashPrefixKey + key));
+            var res = await _redisBase.DoSave(db => db.HashValuesAsync(RedisPrefixKey.HashPrefixKey + key));
             return res != null ? res.ToStringArray() : default;
         }
     }

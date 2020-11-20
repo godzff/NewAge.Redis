@@ -13,23 +13,23 @@ namespace NewAge.Redis.Helpers
 {
     public class RedisBaseHelp : IRedisBase
     {
-        private readonly IRedisConnection redisConnection;
-        public RedisBaseHelp(IRedisConnection _redisConnection)
+        private readonly IRedisConnection _redisConnection;
+        public RedisBaseHelp(IRedisConnection redisConnection)
         {
-            redisConnection = _redisConnection;
+            _redisConnection = redisConnection;
         }
         public IDatabase RedisDataBase
         {
             get
             {
-                return redisConnection.RedisConnection.GetDatabase();
+                return _redisConnection.RedisConnection.GetDatabase();
             }
         }
         public ConnectionMultiplexer RedisConnection
         {
             get
             {
-                return redisConnection.RedisConnection;
+                return _redisConnection.RedisConnection;
             }
         }
 
@@ -64,7 +64,7 @@ namespace NewAge.Redis.Helpers
         /// <param name="host"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public EndPoint ParseEndPoints(string host, int port)
+        public static EndPoint ParseEndPoints(string host, int port)
         {
             if (IPAddress.TryParse(host, out IPAddress ip)) return new IPEndPoint(ip, port);
             return new DnsEndPoint(host, port);
@@ -74,7 +74,7 @@ namespace NewAge.Redis.Helpers
         /// </summary>
         /// <param name="hostAndPort"></param>
         /// <returns></returns>
-        public EndPoint ParseEndPoints(string hostAndPort)
+        public static EndPoint ParseEndPoints(string hostAndPort)
         {
             if (hostAndPort.IndexOf(":") != -1)
             {

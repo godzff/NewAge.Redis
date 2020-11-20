@@ -28,7 +28,7 @@ namespace NewAge.Redis.Helpers
             //反射实体的信息
             var type = typeof(T);
             string key = RedisPrefixKey.SetPrefixKey + type.Name;
-            return await redisBase.DoSave(db => db.SetAddAsync(key, value));
+            return await _redisBase.DoSave(db => db.SetAddAsync(key, value));
         }
         /// <summary>
         /// 移除
@@ -43,7 +43,7 @@ namespace NewAge.Redis.Helpers
             //反射实体的信息
             var type = typeof(T);
             string key = RedisPrefixKey.SetPrefixKey + type.Name;
-            return await redisBase.DoSave(db => db.SetRemoveAsync(key, value));
+            return await _redisBase.DoSave(db => db.SetRemoveAsync(key, value));
         }
         /// <summary>
         /// 取值
@@ -54,7 +54,7 @@ namespace NewAge.Redis.Helpers
             //反射实体的信息
             var type = typeof(T);
             string key = RedisPrefixKey.SetPrefixKey + type.Name;
-            return (await redisBase.DoSave(db => db.SetMembersAsync(key))).ToStringArray();
+            return (await _redisBase.DoSave(db => db.SetMembersAsync(key))).ToStringArray();
         }
         /// <summary>
         /// 取值
@@ -62,7 +62,7 @@ namespace NewAge.Redis.Helpers
         /// <typeparam name="T"></typeparam>
         public async Task<string[]> SetGetAsync(string key)
         {
-            return (await redisBase.DoSave(db => db.SetMembersAsync(RedisPrefixKey.SetPrefixKey + key))).ToStringArray();
+            return (await _redisBase.DoSave(db => db.SetMembersAsync(RedisPrefixKey.SetPrefixKey + key))).ToStringArray();
         }
         /// <summary>
         /// 新增
@@ -73,7 +73,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value.IsNullOrEmpty())
                 throw new MyException(nameof(value));
-            return await redisBase.DoSave(db => db.SetAddAsync(RedisPrefixKey.SetPrefixKey + key, value));
+            return await _redisBase.DoSave(db => db.SetAddAsync(RedisPrefixKey.SetPrefixKey + key, value));
         }
         /// <summary>
         /// 移除
@@ -85,7 +85,7 @@ namespace NewAge.Redis.Helpers
         {
             if (value.IsNullOrEmpty())
                 throw new MyException(nameof(value));
-            return await redisBase.DoSave(db => db.SetRemoveAsync(RedisPrefixKey.SetPrefixKey + key, value));
+            return await _redisBase.DoSave(db => db.SetRemoveAsync(RedisPrefixKey.SetPrefixKey + key, value));
         }
     }
 }

@@ -26,7 +26,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<bool> LockAsync(string key, string value, TimeSpan expiry)
         {
-            return await redisBase.DoSave((database) =>
+            return await _redisBase.DoSave((database) =>
             {
                 return database.LockTakeAsync(RedisPrefixKey.LockPrefixKey + key, value, expiry);
             });
@@ -41,7 +41,7 @@ namespace NewAge.Redis.Helpers
         /// <returns></returns>
         public async Task<bool> LockReleaseAsync(string key, string value)
         {
-            return await redisBase.DoSave((database) =>
+            return await _redisBase.DoSave((database) =>
             {
                 return database.LockReleaseAsync(RedisPrefixKey.LockPrefixKey + key, value);
             });
