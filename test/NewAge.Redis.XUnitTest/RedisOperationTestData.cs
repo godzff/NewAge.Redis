@@ -12,13 +12,23 @@ namespace NewAge.Redis.XUnitTest
     public partial class RedisOperationTest
     {
         /// <summary>
-        /// string 操作的数据
+        /// string 会操作成功的数据
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<object[]> StringProvideData() {
-            yield return new object[] { "test1", 11111 };
-            yield return new object[] { "test2", 22222 };
-            yield return new object[] { "test3", 33333 };
+        public static IEnumerable<object[]> StringTrueProvideData() {
+            yield return new object[] { "t_long", 11111 };
+            yield return new object[] { "t_string", "hahaha" };
+            yield return new object[] { "t_object", new { id = 1 } };
+        }
+        /// <summary>
+        /// string 会操作失败的数据
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<object[]> StringFalseProvideData()
+        {
+            yield return new object[] { "f_long", null };
+            yield return new object[] { "f_string", null };
+            yield return new object[] { "f_object", null };
         }
     }
 }

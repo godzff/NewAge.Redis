@@ -10,15 +10,15 @@ namespace NewAge.Redis.Const
     public class RedisPrefixKey
     {
         /// <summary>
-        /// string类型的前缀 (默认string:)
+        /// string类型的前缀 (默认str:)
         /// </summary>
         public const string StringPrefixKey  = "str:";
         /// <summary>
-        /// List 类型的前缀  (默认list:)
+        /// List 类型的前缀  (lst:)
         /// </summary>
         public const string ListPrefixKey = "lst:";
         /// <summary>
-        /// Set类型的前缀  (set:)
+        /// Set类型的前缀  (uset:)
         /// </summary>
         public const string SetPrefixKey = "uset:";
         /// <summary>

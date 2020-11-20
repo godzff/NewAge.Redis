@@ -11,19 +11,41 @@ namespace NewAge.Redis.XUnitTest
 {
     public partial class RedisOperationTest
     {
+        #region string set
         /// <summary>
-        /// 
+        /// 保存string类型的数据
         /// </summary>
         /// <param name="Key"></param>
         /// <param name="Values"></param>
         /// <returns></returns>
-        //[Fact]
         [Theory]
-        [MemberData(nameof(StringProvideData))]
-        public async Task Should_Set_String_True(string Key,string Values)
+        [MemberData(nameof(StringTrueProvideData))]
+        public async Task Should_Set_String_True<T>(string Key, T Values)
         {
-            var strings = await redis.StringSetAsync(Key, Values);
-            strings.ShouldBe(true);
+            var Res = await redis.StringSetAsync(Key, Values);
+            Res.ShouldBe(true);
         }
+        /// <summary>
+        /// 保存string类型的数据
+        /// </summary>
+        /// <param name="Key"></param>
+        /// <param name="Values"></param>
+        /// <returns></returns>
+        [Theory]
+        [MemberData(nameof(StringFalseProvideData))]
+        public async Task Should_Set_String_False<T>(string Key, T Values)
+        {
+            bool Res = true;
+            try
+            {
+                Res = await redis.StringSetAsync(Key, Values);
+            }
+            catch
+            {
+                Res = false;
+            }
+            Res.ShouldBe(false);
+        }
+        #endregion
     }
 }
