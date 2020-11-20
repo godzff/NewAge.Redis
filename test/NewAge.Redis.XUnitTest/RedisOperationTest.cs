@@ -9,23 +9,17 @@ using Shouldly;
 
 namespace NewAge.Redis.XUnitTest
 {
-    public class RedisTest
+    public partial class RedisOperationTest
     {
-        IServiceCollection services = new ServiceCollection();
-        IRedisOperation redis;
-        public RedisTest()
+        private readonly IServiceCollection services = new ServiceCollection();
+        private readonly IRedisOperation redis;
+        public RedisOperationTest()
         {
             services.AddRedisRepository(options =>
             {
                 options.Connection = new string[] { "127.0.0.1:6379" };
             });
             redis = services.BuildServiceProvider().GetService<IRedisOperation>();
-        }
-        [Fact]
-        public async Task Test1()
-        {
-            var strings = await redis.StringSetAsync("test","1111111");
-            strings.ShouldBe(true);
         }
     }
 }

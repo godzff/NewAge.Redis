@@ -12,15 +12,15 @@ namespace NewAge.Redis.Const
         /// <summary>
         /// string类型的前缀 (默认string:)
         /// </summary>
-        public const string StringPrefixKey  = "string:";
+        public const string StringPrefixKey  = "str:";
         /// <summary>
         /// List 类型的前缀  (默认list:)
         /// </summary>
-        public const string ListPrefixKey = "list:";
+        public const string ListPrefixKey = "lst:";
         /// <summary>
         /// Set类型的前缀  (set:)
         /// </summary>
-        public const string SetPrefixKey = "set:";
+        public const string SetPrefixKey = "uset:";
         /// <summary>
         /// Hash 类型的前缀  (默认hash:)
         /// </summary>
@@ -28,7 +28,7 @@ namespace NewAge.Redis.Const
         /// <summary>
         /// 有序集合的前缀  (默认sortedset:)
         /// </summary>
-        public const string SortedSetPrefixKey = "sortedset:";
+        public const string SortedSetPrefixKey = "sset:";
         /// <summary>
         /// 集合(事务)的前缀
         /// </summary>
